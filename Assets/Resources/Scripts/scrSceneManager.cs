@@ -10,6 +10,8 @@ public class scrSceneManager : MonoBehaviour
     public bool isAiming;
     public bool isResetting;
     public bool isWin;
+
+    public bool isRip;
     bool initDone;
     public int ballNum;
     public int resetTime;
@@ -26,16 +28,18 @@ public class scrSceneManager : MonoBehaviour
     public int deltaScore;
     public List<Text> scoreTextList;
     GameObject resetText;
+    GameObject resetTextShadow;
     //int numOfScoreText;
     //int numOfScoreTextMax;
     void Start()
     {
         Debug.Log("Start");
         initDone = false;
-        resetTimeMax = 200;
+        resetTimeMax = 220;
         resetTime = resetTimeMax;
         GameObject[] goArr = GameObject.FindGameObjectsWithTag("ScoreText");
         resetText = GameObject.Find("ScoreTextReset");
+        resetTextShadow = GameObject.Find("ScoreTextResetShadow");
         int i = 0;
         for(i = 0; i<goArr.Length;i++) {
              scoreTextList.Add (goArr[i].gameObject.GetComponent<Text>());
@@ -56,6 +60,7 @@ public class scrSceneManager : MonoBehaviour
         {
             ballNum = 10;
             InitOrange();
+            InitPurple();
         }
         else
             ballNum = 1;
@@ -111,14 +116,24 @@ public class scrSceneManager : MonoBehaviour
                 if(resetTime>0){
                     resetTime-=1;
                     resetText.gameObject.transform.position = new Vector3 (0.0f,0.0f,0.0f);
-                    resetText.GetComponent<Text>().text = "Ball High Score:\n"+hitCount.ToString();
+                    if(hitCount>=1000)
+                        resetText.GetComponent<Text>().text = "Ball High Score:\n"+hitCount.ToString()+"\n FREE BALL!";
+                    else
+                        resetText.GetComponent<Text>().text = "Ball High Score:\n"+hitCount.ToString();
+                    resetTextShadow.gameObject.transform.position = new Vector3(
+                    resetText.gameObject.transform.transform.position.x,
+                    resetText.gameObject.transform.transform.position.y-0.05f,
+                    resetText.gameObject.transform.transform.position.z);
+                    resetTextShadow.GetComponent<Text>().text = resetText.GetComponent<Text>().text;
                 }
                 else{
                     isAiming = true;
                     GameObject.Find("objCapsule").GetComponent<scrCapsule>().isAiming = true;
                     GameObject.Find("objCapsule").GetComponent<scrCapsule>().isResetting = false;
                     GameObject.Find("objCapsule").GetComponent<scrCapsule>().deltaAngle = 0.0f;
+                    InitPurple();
                     resetText.gameObject.transform.position = new Vector3 (-20.0f,0.0f,0.0f);
+                    resetTextShadow.gameObject.transform.position = new Vector3 (-20.0f,0.0f,0.0f);
                     isResetting = false;
                     resetTime = resetTimeMax;
                     hitCount = 0;
@@ -128,6 +143,11 @@ public class scrSceneManager : MonoBehaviour
         else{
             resetText.gameObject.transform.position = new Vector3 (0.0f,0.0f,0.0f);
             resetText.GetComponent<Text>().text = "You WIn~!:))))\n"+"final score:\n"+score.ToString();
+            resetTextShadow.gameObject.transform.position = new Vector3(
+            resetText.gameObject.transform.transform.position.x,
+            resetText.gameObject.transform.transform.position.y-0.05f,
+            resetText.gameObject.transform.transform.position.z);
+            resetTextShadow.GetComponent<Text>().text = resetText.GetComponent<Text>().text;
         }
         if(deltaScore>0)
         {
@@ -138,20 +158,30 @@ public class scrSceneManager : MonoBehaviour
             GameObject.Find("objTextScore").GetComponent<Text>().transform.localScale = 
             new Vector3(tempScale,tempScale,1.0f);
         }
+        if(isRip)
+        {
+            resetText.gameObject.transform.position = new Vector3 (0.0f,0.0f,0.0f);
+            resetText.GetComponent<Text>().text = "rip:(\nR to restart";
+            resetTextShadow.gameObject.transform.position = new Vector3(
+            resetText.gameObject.transform.transform.position.x,
+            resetText.gameObject.transform.transform.position.y-0.05f,
+            resetText.gameObject.transform.transform.position.z);
+            resetTextShadow.GetComponent<Text>().text = resetText.GetComponent<Text>().text;
+        }
     }
     void InitOrange()
     {
         if(!initDone){
-            Debug.Log("InitOrange");
+        //    Debug.Log("InitOrange");
             
         Pegs = GameObject.FindGameObjectsWithTag("Pegs");
-        Debug.Log("PegsLen "+Pegs.Length);
-        Debug.Log("Modifying:");
+        //Debug.Log("PegsLen "+Pegs.Length);
+        //Debug.Log("Modifying:");
         int orangeLen = Pegs.Length/5;
         int orangeIndex = Random.Range(0,Pegs.Length-1);
         for(int i = 0; i<orangeLen; i++)
         {
-            Debug.Log(Pegs[orangeIndex].name);
+        //    Debug.Log(Pegs[orangeIndex].name);
             Pegs[orangeIndex].tag = "PegsOrange";
             Pegs[orangeIndex].GetComponent<scrPeg>().changeToOrange();
             Pegs = GameObject.FindGameObjectsWithTag("Pegs");
@@ -169,8 +199,22 @@ public class scrSceneManager : MonoBehaviour
             }
         }
         initDone = true;
-        Debug.Log("PegsLen "+Pegs.Length);
+        //Debug.Log("PegsLen "+Pegs.Length);
 
+        }
+    }
+    public void InitPurple()
+    {
+        if(currSceneName == "Level"){ ////////////INITPURPLE
+            Pegs = GameObject.FindGameObjectsWithTag("Pegs");
+            int ranIndex = Random.Range(0,Pegs.Length-1);
+            while(Pegs[ranIndex].GetComponent<scrPeg>().isHit)
+                ranIndex = Random.Range(0,Pegs.Length-1);
+            if(Pegs.Length>0)
+            {
+                Pegs[ranIndex].tag = "PegsPurple";
+                Pegs[ranIndex].GetComponent<scrPeg>().changeToPurple();
+            }   
         }
     }
     public void AddTOTextList(Collision2D peg) //For score
@@ -205,6 +249,8 @@ public class scrSceneManager : MonoBehaviour
     }
     public void ResetBall()
     {
+        if(hitCount>=1000)
+            ballNum+=1;
         if(ballNum>0)
         {
             foreach(Text textObj in scoreTextList)
@@ -216,6 +262,7 @@ public class scrSceneManager : MonoBehaviour
         }
         else
         {
+            isRip = true;
             capsule.GetComponent<scrCapsule>().ball.GetComponent<SpriteRenderer>().color = new Color(0.0f,0.0f,0.0f,0.0f);
             GameObject.Find("objBallLight").GetComponent<SpriteRenderer>().color = new Color(0.0f,0.0f,0.0f,0.0f);
             GameObject.Find("sprPegShadow_0").GetComponent<SpriteRenderer>().color = new Color(0.0f,0.0f,0.0f,0.0f);

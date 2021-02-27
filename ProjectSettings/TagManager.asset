@@ -10,6 +10,7 @@ TagManager:
   - Trigger
   - ResetPlane
   - ScoreText
+  - PegsPurple
   layers:
   - Default
   - TransparentFX

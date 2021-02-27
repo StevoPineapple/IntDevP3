@@ -366,6 +366,7 @@ RectTransform:
   - {fileID: 737173769}
   - {fileID: 584552528}
   - {fileID: 1459165102}
+  - {fileID: 85260697}
   - {fileID: 1911836104}
   m_Father: {fileID: 0}
   m_RootOrder: 116
@@ -612,6 +613,84 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31df4bca74b295d4fa8a53808f61a61c, type: 3}
+--- !u!1 &85260696
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 85260697}
+  - component: {fileID: 85260699}
+  - component: {fileID: 85260698}
+  m_Layer: 5
+  m_Name: ScoreTextResetShadow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &85260697
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85260696}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.19999999, y: 0.19999999, z: 1}
+  m_Children: []
+  m_Father: {fileID: 49113453}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -10.21, y: -0.125}
+  m_SizeDelta: {x: 49.507256, y: 15.800585}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &85260698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85260696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.14150941, g: 0.056737266, b: 0.09484296, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 3
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Ball High Score:'
+--- !u!222 &85260699
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85260696}
+  m_CullTransparentMesh: 0
 --- !u!1 &96808376
 GameObject:
   m_ObjectHideFlags: 0
@@ -1716,7 +1795,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 2c4b6a338b4ccee48a3b2b073662558c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5072,12 +5151,12 @@ PrefabInstance:
     - target: {fileID: 3753885267909347970, guid: 14bf3c1876e4ca442a8e1860387c6a38,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.303
+      value: 2.21
       objectReference: {fileID: 0}
     - target: {fileID: 3753885267909347970, guid: 14bf3c1876e4ca442a8e1860387c6a38,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.955
+      value: -0.87
       objectReference: {fileID: 0}
     - target: {fileID: 3753885267909347970, guid: 14bf3c1876e4ca442a8e1860387c6a38,
         type: 3}
@@ -5704,6 +5783,7 @@ MonoBehaviour:
   isAiming: 0
   isResetting: 0
   isWin: 0
+  isRip: 0
   ballNum: 0
   resetTime: 0
   resetTimeMax: 0
@@ -9036,7 +9116,7 @@ RectTransform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 49113453}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9056,7 +9136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.8443396, b: 0.9080752, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:

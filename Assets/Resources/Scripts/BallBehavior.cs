@@ -120,6 +120,15 @@ public class BallBehavior : MonoBehaviour
             other.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             other.gameObject.GetComponent<Rigidbody2D>().gravityScale = sceneMan.GetComponent<scrSceneManager>().ballGravL;
         }
+        else if(other.gameObject.tag == "PegsPurple" && !other.gameObject.GetComponent<scrPeg>().isHit)
+        {
+            sceneMan.hitCount += 400;
+            sceneMan.deltaScore+=sceneMan.hitCount;
+            sceneMan.AddTOTextList(other);
+            other.gameObject.GetComponent<scrPeg>().isHit = true;
+            other.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/sprPegPurpleHit");
+            other.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        }
     }
     void OnCollisionExit2D(Collision2D other)
     {
@@ -167,6 +176,16 @@ public class BallBehavior : MonoBehaviour
                     peg.gameObject.GetComponent<Collider2D>().isTrigger = true;
                     peg.gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f,1.0f,1.0f,0.3f);
                 }  
+            } 
+            foreach(GameObject peg in GameObject.FindGameObjectsWithTag("PegsPurple"))
+            {
+                if(peg.GetComponent<scrPeg>().isHit)
+                {
+                    peg.gameObject.GetComponent<Collider2D>().isTrigger = true;
+                    peg.gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f,1.0f,1.0f,0.3f);
+                }
+                else
+                    peg.gameObject.GetComponent<scrPeg>().changeToBlue();
             } 
             currColList.Clear();
             ballColList.Clear();

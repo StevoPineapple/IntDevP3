@@ -27,7 +27,7 @@ public class scrPeg : MonoBehaviour
     }
     public void changeToOrange()
     {
-        Debug.Log(gameObject.name);
+        //Debug.Log(gameObject.name);
         isOrange = true;
         sprPeg = Resources.LoadAll<Sprite>("Sprites/sprPeg");
         sprRenderer.sprite = sprPeg[2];
@@ -43,11 +43,18 @@ public class scrPeg : MonoBehaviour
     }
     public void changeToPurple()
     {
-        isGreen = true;
-        gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/sprPegGreen");
-        gameObject.AddComponent<scrSpecialPeg>();
-        gameObject.AddComponent<BallBehaviorM>();
+        isPurple = true;
+        gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/sprPegPurple");
+        gameObject.tag = "PegsPurple";
         //Debug.Log(Resources.Load<Sprite>("Sprites/sprPeg_2"));
     }
+    public void changeToBlue()
+    {
+        //Debug.Log(Resources.LoadAll<Sprite>("Sprites/sprPeg").Length);
+        isPurple = false;
+        gameObject.GetComponent<SpriteRenderer>().sprite = Resources.LoadAll<Sprite>("Sprites/sprPeg")[1];
+        gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        gameObject.tag = "Pegs";  
+    }  
 }
 
