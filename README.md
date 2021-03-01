@@ -1,4 +1,6 @@
 # Prototype3 for intermediate game design
+Peggle clone and Goldberg machine for a class to learn Unity.
+
 
 Ver1.1.1(2/27):  
 -Changed purple point boost to 400pts  
